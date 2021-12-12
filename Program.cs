@@ -9,8 +9,6 @@ using Microsoft.AspNetCore;
 
 namespace BookStoreSelling.API
 {
-
-#pragma warning disable CS1591
   public class Program
   {
     public static async Task Main(string[] args)
@@ -38,5 +36,4 @@ namespace BookStoreSelling.API
               webBuilder.UseStartup<Startup>();
             });
   }
-#pragma warning restore CS1591
 }

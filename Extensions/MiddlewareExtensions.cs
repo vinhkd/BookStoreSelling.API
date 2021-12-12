@@ -20,8 +20,8 @@ namespace BookStoreSelling.API.Extensions
                     Description = "Simple RESTful API built with ASP.NET Core 3.1 to show how to create RESTful services using a decoupled, maintainable architecture.",
                     Contact = new OpenApiContact
                     {
-                        Name = "...",
-                        Url = new Uri("...")
+                        Name = "BookStore",
+                        Url = new Uri("https://bookingstoreselling.com/")
                     },
                     License = new OpenApiLicense
                     {
@@ -29,9 +29,9 @@ namespace BookStoreSelling.API.Extensions
                     },
                 });
 
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                cfg.IncludeXmlComments(xmlPath);
+                // var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                // cfg.IncludeXmlComments(xmlPath);
             });
             return services;
         }

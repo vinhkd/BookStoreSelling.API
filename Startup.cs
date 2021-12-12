@@ -28,6 +28,8 @@ namespace BookStoreSelling.API
 
       services.AddCustomSwagger();
 
+      services.AddControllers();
+      
       services.AddDbContext<AppDbContext>(options =>
       {
         options.UseInMemoryDatabase(Configuration.GetConnectionString("memory"));

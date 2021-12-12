@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BookStoreSelling.API.Domain.Models;
 using BookStoreSelling.API.Domain.Repositories;
 using BookStoreSelling.API.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreSelling.API.Persistence.Repositories
 {
@@ -12,9 +13,9 @@ namespace BookStoreSelling.API.Persistence.Repositories
         public StoreRepository(AppDbContext context) : base(context)
         {
         }
-        public Task<IEnumerable<Store>> ListAsync()
+        public async Task<IEnumerable<Store>> ListAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Stores.AsNoTracking().ToListAsync();
         }
     }
 }
