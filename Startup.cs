@@ -11,6 +11,9 @@ using BookStoreSelling.API.Extensions;
 using BookStoreSelling.API.Persistence.Contexts;
 using BookStoreSelling.API.Persistence.Repositories;
 using BookStoreSelling.API.Services;
+using Quartz;
+using BookStoreSelling.API.Infrastructure;
+
 namespace BookStoreSelling.API
 {
   public class Startup
@@ -35,6 +38,19 @@ namespace BookStoreSelling.API
         options.UseInMemoryDatabase(Configuration.GetConnectionString("memory"));
       });
 
+      services.AddQuartz(q =>
+      {
+        //TODO: Here is the job to:
+        // - Activate to run at a certain time or a certain time of day
+        // - Connect and read an email.
+        // - Download XML and parse XML files.
+        // - Deserialize file content and save data to database
+        //(We can use store name and ISBN code to identify a book)
+        q.UseMicrosoftDependencyInjectionScopedJobFactory();
+        q.AddJobAndTrigger<InitDataJob>(Configuration);
+      });
+      services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+        
       services.AddScoped<IStoreRepository, StoreRepository>();
       services.AddScoped<IBookRepository, BookRepository>();
       services.AddScoped<IUnitOfWork, UnitOfWork>();
