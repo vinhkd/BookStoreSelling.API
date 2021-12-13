@@ -23,16 +23,15 @@ namespace BookStoreSelling.API.Services
         }
         public async Task<QueryResult<Book>> ListAsync(BooksQuery query)
         {
-            // Here I list the query result from cache if they exist, but now the data can vary according to the Store ID, page and amount of
-            // items per page. I have to compose a cache to avoid returning wrong data.
-            string cacheKey = GetCacheKeyForBooksQuery(query);
+            //Maybe should remove the cache to support search keyword
+            // string cacheKey = GetCacheKeyForBooksQuery(query);
             
-            var books = await _cache.GetOrCreateAsync(cacheKey, (entry) => {
-                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1);
-                return _bookRepository.ListAsync(query);
-            });
+            // var books = await _cache.GetOrCreateAsync(cacheKey, (entry) => {
+            //     entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1);
+            //     return _bookRepository.ListAsync(query);
+            // });
 
-            return books;
+            return await _bookRepository.ListAsync(query);
         }
 
     private string GetCacheKeyForBooksQuery(BooksQuery query)

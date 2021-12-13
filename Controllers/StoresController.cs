@@ -25,11 +25,11 @@ namespace BookStoreSelling.API.Controllers
         /// <returns>List os stores.</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<StoreResource>), 200)]
-        public async Task<IEnumerable<Store>> ListAsync()
+        public async Task<IEnumerable<StoreResource>> ListAsync()
         {
             var stores = await _storeService.ListAsync();
             var resources = _mapper.Map<IEnumerable<Store>, IEnumerable<StoreResource>>(stores);
-            return stores;
+            return resources;
         }
     }
 }

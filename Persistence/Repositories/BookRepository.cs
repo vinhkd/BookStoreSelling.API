@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,6 +26,11 @@ namespace BookStoreSelling.API.Persistence.Repositories
 			if (query.StoreId.HasValue && query.StoreId > 0)
 			{
 				queryable = queryable.Where(p => p.StoreId == query.StoreId);
+			}
+
+      if (!String.IsNullOrEmpty(query.Keyword))
+			{
+				queryable = queryable.Where(p => p.Name.Contains(query.Keyword));
 			}
 
 			// Here I count all items present in the database for the given query, to return as part of the pagination data.
