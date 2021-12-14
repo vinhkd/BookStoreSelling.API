@@ -1,4 +1,4 @@
-namespace BookStoreSelling.API.Domain.Models
+namespace BookStoreSelling.API.Domain.Models.Queries
 {
     public class BookSpecific
     {

@@ -7,5 +7,6 @@ namespace BookStoreSelling.API.Domain.Repositories
     public interface IBookRepository
     {
        Task<QueryResult<BookSpecific>> ListAsync(BooksQuery query); 
+       Task<BookInStore> GetAsync(int id);
     }
 }

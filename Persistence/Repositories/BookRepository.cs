@@ -16,6 +16,42 @@ namespace BookStoreSelling.API.Persistence.Repositories
     public BookRepository(AppDbContext context) : base(context)
     {
     }
+
+    public async Task<BookInStore> GetAsync(int id)
+    {
+      var queryBookStore = _context.BookStores
+      									.AsNoTracking()
+      									.Where(x => x.BookId == id);
+
+      List<StoreWithPrice> listStoreWithPrice = await queryBookStore
+																						.Join(_context.Stores.AsNoTracking().AsQueryable(),
+																							bookStore => bookStore.StoreId,
+																							store => store.Id,
+																							(bookStore, store) => new StoreWithPrice
+																							{
+																								Id = store.Id,
+																								Name = store.Name,
+																								Price = bookStore.Price,
+																								NumberLeftStock = bookStore.NumberLeftStock,
+																								UnitOfPrice = bookStore.UnitOfPrice
+																							}).ToListAsync();
+
+      var queryBook = _context.Books
+                  .AsNoTracking()
+                  .AsQueryable()
+                  .Where(x => x.Id == id)
+                  .FirstOrDefault();
+
+      return new BookInStore
+      {
+        Id = queryBook.Id,
+        Name = queryBook.Name,
+        Author = queryBook.Author,
+        ISBNCode = queryBook.ISBNCode,
+        StoreWithPrices = listStoreWithPrice
+      };
+    }
+
     public async Task<QueryResult<BookSpecific>> ListAsync(BooksQuery query)
     {
       var queryBookStore = _context.BookStores.AsNoTracking();
@@ -23,19 +59,19 @@ namespace BookStoreSelling.API.Persistence.Repositories
       {
         queryBookStore = queryBookStore.Where(x => x.StoreId == query.StoreId);
       }
-      var queryable = _context.Books.AsQueryable()
-                  .Join(queryBookStore.AsNoTracking(),
+      var queryable = _context.Books.AsNoTracking().AsQueryable()
+                  .Join(queryBookStore,
                   book => book.Id,
                   bookStore => bookStore.BookId,
-                  (book, bookStore) => new 
+                  (book, bookStore) => new
                   {
                     Id = book.Id,
                     Name = book.Name,
                     Author = book.Author,
                     ISBNCode = book.ISBNCode,
-										Price = bookStore.Price,
+                    Price = bookStore.Price,
                     NumberLeftStock = bookStore.NumberLeftStock,
-										UnitOfPrice = bookStore.UnitOfPrice
+                    UnitOfPrice = bookStore.UnitOfPrice
                   })
                   .GroupBy(x => new { x.Id, x.Name, x.Author, x.ISBNCode, x.UnitOfPrice })
                   .Select(y => new BookSpecific
@@ -47,7 +83,7 @@ namespace BookStoreSelling.API.Persistence.Repositories
                     MinPrice = y.Min(z => z.Price),
                     MaxPrice = y.Max(z => z.Price),
                     NumberLeftStock = y.Sum(z => z.NumberLeftStock),
-										UnitOfPrice = y.Key.UnitOfPrice //TODO: Need to update value MinPrice and MaxPrice when UnitOfPrice different 
+                    UnitOfPrice = y.Key.UnitOfPrice //TODO: Need to update value MinPrice and MaxPrice when UnitOfPrice different 
                   });
       if (!String.IsNullOrEmpty(query.Keyword))
       {

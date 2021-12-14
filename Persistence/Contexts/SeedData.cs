@@ -4,11 +4,11 @@ using BookStoreSelling.API.Domain.Models;
 
 namespace BookStoreSelling.API.Persistence.Contexts
 {
-    public static class SeedData
+  public static class SeedData
+  {
+    public static async Task Seed(AppDbContext context)
     {
-     public static async Task Seed(AppDbContext context)
-        {
-            var books = new List<Book>
+      var books = new List<Book>
             {
                 new Book
                 {
@@ -39,48 +39,48 @@ namespace BookStoreSelling.API.Persistence.Contexts
                 }
             };
 
-            var stores = new List<Store>
+      var stores = new List<Store>
             {
                 new Store { Id = 001, Name = "Fruits and Vegetables" },
                 new Store { Id = 002, Name = "Dairy" }
             };
 
-            var bookStores = new List<BookStore>
+      var bookStores = new List<BookStore>
             {
-                new BookStore 
-                { 
+                new BookStore
+                {
                     StoreId = 001,
                     BookId = 99,
                     Price = 55.3F,
                     NumberLeftStock = 32,
                     UnitOfPrice = EUnitOfPrice.USD
                 },
-                new BookStore 
-                { 
+                new BookStore
+                {
                     StoreId = 001,
                     BookId = 100,
                     Price = 12.3F,
                     NumberLeftStock = 12,
                     UnitOfPrice = EUnitOfPrice.USD
                 },
-                new BookStore 
-                { 
+                new BookStore
+                {
                     StoreId = 001,
                     BookId = 101,
                     Price = 98.0F,
                     NumberLeftStock = 90,
                     UnitOfPrice = EUnitOfPrice.USD
                 },
-                new BookStore 
-                { 
+                new BookStore
+                {
                     StoreId = 002,
                     BookId = 102,
                     Price = 53.5F,
                     NumberLeftStock = 35,
                     UnitOfPrice = EUnitOfPrice.USD
                 },
-                new BookStore 
-                { 
+                new BookStore
+                {
                     StoreId = 002,
                     BookId = 99,
                     Price = 54.3F,
@@ -89,11 +89,11 @@ namespace BookStoreSelling.API.Persistence.Contexts
                 }
             };
 
-            context.Books.AddRange(books);
-            context.Stores.AddRange(stores);
-            context.BookStores.AddRange(bookStores);
+      context.Books.AddRange(books);
+      context.Stores.AddRange(stores);
+      context.BookStores.AddRange(bookStores);
 
-            await context.SaveChangesAsync();
-        }   
+      await context.SaveChangesAsync();
     }
+  }
 }
