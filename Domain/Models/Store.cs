@@ -6,6 +6,5 @@ namespace BookStoreSelling.API.Domain.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public IList<Book> Books { get; set; } = new List<Book>();
     }
 }

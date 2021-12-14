@@ -13,7 +13,6 @@ namespace BookStoreSelling.API.Persistence.Contexts.Configurations
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();//.HasValueGenerator<InMemoryIntegerValueGenerator<int>>();
             builder.Property(p => p.Name).IsRequired().HasMaxLength(50);
-            builder.HasMany(p => p.Books).WithOne(p => p.Store).HasForeignKey(p => p.StoreId);
         }
     }
 }

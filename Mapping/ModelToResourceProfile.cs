@@ -11,11 +11,11 @@ namespace BookStoreSelling.API.Mapping
         public ModelToResourceProfile()
         {
             CreateMap<Store, StoreResource>();
-            CreateMap<Book, BookResource>()
+            CreateMap<BookSpecific, BookResource>()
                 .ForMember(src => src.UnitOfPrice,
                             opt => opt.MapFrom(src => src.UnitOfPrice.ToDescriptionString()));
 
-            CreateMap<QueryResult<Book>, QueryResultResource<BookResource>>();
+            CreateMap<QueryResult<BookSpecific>, QueryResultResource<BookResource>>();
         }
     }
 }

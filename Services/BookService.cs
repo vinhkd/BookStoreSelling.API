@@ -21,7 +21,8 @@ namespace BookStoreSelling.API.Services
             _unitOfWork = unitOfWork;
             _cache = cache;
         }
-        public async Task<QueryResult<Book>> ListAsync(BooksQuery query)
+        
+        public async Task<QueryResult<BookSpecific>> ListAsync(BooksQuery query)
         {
             //Maybe should remove the cache to support search keyword
             // string cacheKey = GetCacheKeyForBooksQuery(query);
@@ -35,14 +36,14 @@ namespace BookStoreSelling.API.Services
         }
 
     private string GetCacheKeyForBooksQuery(BooksQuery query)
-    {
-        string key = CacheKeys.BooksList.ToString();    
-        if (query.StoreId.HasValue && query.StoreId > 0)
         {
-            key = string.Concat(key, "_", query.StoreId.Value);
+            string key = CacheKeys.BooksList.ToString();    
+            if (query.StoreId.HasValue && query.StoreId > 0)
+            {
+                key = string.Concat(key, "_", query.StoreId.Value);
+            }
+            key = string.Concat(key, "_", query.Page, "_", query.ItemsPerPage);
+            return key;
         }
-        key = string.Concat(key, "_", query.Page, "_", query.ItemsPerPage);
-        return key;
     }
-  }
 }

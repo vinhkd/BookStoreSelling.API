@@ -1,3 +1,5 @@
+using BookStoreSelling.API.Resources.Queries;
+
 namespace BookStoreSelling.API.Resources
 {
     public class BooksQueryResource : QueryResource

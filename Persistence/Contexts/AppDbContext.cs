@@ -8,6 +8,7 @@ namespace BookStoreSelling.API.Persistence.Contexts
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<Store> Stores { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<BookStore> BookStores { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

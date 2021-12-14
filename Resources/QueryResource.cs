@@ -1,4 +1,4 @@
-namespace BookStoreSelling.API.Resources
+namespace BookStoreSelling.API.Resources.Queries
 {
     public class QueryResource
     {

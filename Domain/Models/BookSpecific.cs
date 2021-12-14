@@ -1,8 +1,6 @@
-using BookStoreSelling.API.Domain.Models;
-
-namespace BookStoreSelling.API.Resources
+namespace BookStoreSelling.API.Domain.Models
 {
-    public class BookResource
+    public class BookSpecific
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -11,6 +9,6 @@ namespace BookStoreSelling.API.Resources
         public float MinPrice { get; set; }
         public float MaxPrice { get; set; }
         public int NumberLeftStock { get; set; }
-        public string UnitOfPrice { get; set; }
+        public EUnitOfPrice UnitOfPrice { get; set; }
     }
 }
